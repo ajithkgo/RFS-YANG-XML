@@ -1,0 +1,73 @@
+module l2vpn {
+  namespace "http://com/example/l2vpn";
+  prefix l2vpn;
+
+  import ietf-inet-types {
+    prefix inet;
+  }
+  import tailf-ncs {
+    prefix ncs;
+  }
+
+ 
+  list l2vpn {
+    key vpnid;
+
+    uses ncs:service-data;
+    ncs:servicepoint "l2vpn";
+
+    leaf vpnid {
+      type int32 {
+       range "9800 .. 10000"; }
+      mandatory true;
+    }
+
+    // may replace this with other ways of refering to the devices.
+    leaf device {
+      type leafref {
+        path "/ncs:devices/ncs:device/ncs:name";
+      }
+    }
+    // replace with your own stuff here
+    leaf rdvalue {
+      type int32  {
+       range "0 .. 1000"; }
+      mandatory true;
+    }
+     leaf rtvalue {
+      type int32 {
+       range "0 .. 1000";}
+      mandatory true;
+    }
+
+    leaf remoteacid {
+      type int32 {
+       range "0 .. 1000"; }
+      mandatory true;
+    }
+
+    leaf sourceacid {
+      type int32 {
+       range "0 .. 1000"; }
+      mandatory true;
+    }
+
+    leaf  interface {
+      type enumeration {
+        enum TenGigE0/0/0/12.500;
+        enum TenGigE0/0/0/12.501;
+        enum TenGigE0/0/0/12.502;
+        enum GigabitEthernet0/0/0/32.500;
+        enum GigabitEthernet0/0/0/32.501;
+        enum GigabitEthernet0/0/0/32.502;
+        }
+     mandatory true;
+    }
+
+    leaf circuitid {
+      type string {
+        length "0 .. 16";}
+      mandatory true;
+    }
+  }
+}
